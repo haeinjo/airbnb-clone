@@ -1,6 +1,11 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from . import models
+from rooms import models as rooms_models
+
+
+class RoomInline(admin.TabularInline):
+    model = rooms_models.Room
 
 
 @admin.register(models.User)
@@ -39,3 +44,7 @@ class CustomUserAdmin(UserAdmin):
         "is_active",
         "is_superuser",
     )
+
+    inlines = [
+        RoomInline,
+    ]
