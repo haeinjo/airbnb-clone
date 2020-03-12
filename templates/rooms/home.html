@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block page_name %}
+Home
+{% endblock page_name %}
+
+{% block content %}
+{% for room in all_rooms %}
+<p>{{room.name}}</p>
+{% endfor %}
+Page {{ page }} of {{ page_size }}
+{% endblock %}
