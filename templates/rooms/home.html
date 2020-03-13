@@ -5,19 +5,19 @@ Home
 {% endblock page_name %}
 
 {% block content %}
-{% for room in all_rooms %}
+{% for room in page.object_list %}
 <p>{{room.name}}</p>
 {% endfor %}
 <h5>
 
-    {% if page is not 1 %}
-    <a href="?page={{ page|add:-1 }}">Prev</a>
+    {% if page.has_previous %}
+    <a href="?page={{ page.previous_page_number }}">Prev</a>
     {% endif %}
 
-    Page {{ page }} of {{ page_count }}
+    Page {{ page.number }} of {{ page.paginator.num_pages }}
 
-    {% if not page == page_count %}
-    <a href="?page={{ page|add:1 }}">Next</a>
+    {% if page.has_next %}
+    <a href="?page={{ page.next_page_number }}">Next</a>
     {% endif %}
 </h5>
 
