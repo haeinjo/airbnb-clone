@@ -11,11 +11,11 @@ def all_rooms(request):
     offset = page_limit - page_size
 
     all_rooms = rooms_models.Room.objects.all()[offset:page_limit]
-    page_size = rooms_models.Room.objects.count() / page_size
-    page_size = math.ceil(page_size)
+    page_count = rooms_models.Room.objects.count() / page_size
+    page_count = math.ceil(page_count)
 
     return render(
         request,
         "rooms/home.html",
-        context={"all_rooms": all_rooms, "page": page, "page_size": page_size},
+        context={"all_rooms": all_rooms, "page": page, "page_count": page_count, "range": range(1, page_count + 1)},
     )
