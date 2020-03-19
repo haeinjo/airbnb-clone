@@ -18,7 +18,14 @@ class RoomDetail(DetailView):
     """ RoomDetail Definition """
 
     model = models.Room
-    
+
+
+def search(request):
+
+    city = str.capitalize(request.GET.get("city"))
+    rooms = models.Room.objects.filter(city=city)
+    return render(request, "rooms/search.html", {"rooms": rooms})
+
 
 # from django.shortcuts import render, redirect
 # from django.core.paginator import Paginator, EmptyPage
