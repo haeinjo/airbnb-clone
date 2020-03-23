@@ -32,8 +32,8 @@ def search(request):
     baths = int(request.GET.get("baths", 0))
     s_facilities = request.GET.getlist("facilities")
     s_amenities = request.GET.getlist("amenities")
-    superhost = request.GET.get("superhost", False)
-    instant_book = request.GET.get("instant_book", False)
+    superhost = bool(request.GET.get("superhost", False))
+    instant_book = bool(request.GET.get("instant_book", False))
 
     form = {
         "city": city,
@@ -68,6 +68,35 @@ def search(request):
 
     if room_type != 0:
         filter_args["room_type__pk"] = room_type
+
+    if price != 0:
+        filter_args["price__lte"] = price
+
+    if guests != 0:
+        filter_args["guests__gte"] = guests
+
+    if bedrooms != 0:
+        filter_args["bedrooms_gte"] = bedrooms
+
+    if beds != 0:
+        filter_args["beds__gte"] = beds
+
+    if baths != 0:
+        filter_args["baths__gte"] = baths
+
+    if instant_book is True:
+        filter_args["instant_book"] = True
+
+    if superhost is True:
+        filter_args["host__superhost"] = True
+
+    if len(s_amenities):
+        for s_amenity in s_amenities:
+            filter_args["amenities"] = int(s_amenity)
+
+    if len(s_facilities):
+        for s_facility in s_facilities:
+            filter_args["facilities"] = int(s_facility)
 
     filter_args["country"] = country
 
