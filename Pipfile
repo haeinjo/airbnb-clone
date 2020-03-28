@@ -12,6 +12,7 @@ pillow = "*"
 django-countries = "*"
 django = "*"
 django-seed = "*"
+django-dotenv = "*"
 
 [requires]
 python_version = "3.7"

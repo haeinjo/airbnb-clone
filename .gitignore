@@ -206,3 +206,6 @@ $RECYCLE.BIN/
 # End of https://www.gitignore.io/api/django,python,windows,visualstudiocode
 
 uploads/
+
+# Environments
+.env
