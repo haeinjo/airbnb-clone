@@ -93,10 +93,41 @@ def github_callback(request):
     if code is not None:
         client_id = os.environ.get("GH_ID")
         client_secret = os.environ.get("GH_SECRET")
-        request = requests.post(
+        result = requests.post(
             f"https://github.com/login/oauth/access_token?client_id={client_id}&client_secret={client_secret}&code={code}",
             headers={"Accept": "application/json"},
         )
-        print(request.json())
+        result_json = result.json()
+        error = result_json.get("error", None)
+        if error is not None:
+            return redirect(reverse("users:login"))
+        else:
+            access_token = result_json.get("access_token")
+            api_request = requests.get(
+                f"https://api.github.com/user",
+                headers={
+                    "Authorization": f"token {access_token}",
+                    "Accept": "application.json",
+                },
+            )
+            profile_request = api_request.json()
+            print(api_request.json())
+            username = profile_request.get("login", None)
+
+            if username is not None:
+                name = profile_request.get("name")
+                email = profile_request.get("email")
+                bio = profile_request.get("bio")
+                try:
+                    user = models.User.objects.get(username=email)
+                    return redirect(reverse("users:login"))
+                except models.User.DoesNotExist:
+                    user = models.User.objects.create_user(
+                        username=email, email=email, first_name=name, bio=bio
+                    )
+                    login(request, user)
+                    return redirect(reverse("core:home"))
+            else:
+                return redirect(reverse("users:login"))
     else:
         return redirect(reverse("core:home"))
