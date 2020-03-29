@@ -116,7 +116,6 @@ def github_callback(request):
                     },
                 )
                 profile_request = api_request.json()
-                print(api_request.json())
                 username = profile_request.get("login", None)
 
                 if username is not None:
@@ -134,6 +133,7 @@ def github_callback(request):
                             first_name=name,
                             bio=bio,
                             login_method=models.User.LOGIN_GITHUB,
+                            email_verified=True,
                         )
                         user.set_unusable_password()
                         user.save()
@@ -169,6 +169,42 @@ def kakao_callback(request):
             f"https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id={client_id}&redirect_uri={redirect_uri}&code={code}"
         )
         token_json = token_request.json()
-        print(token_json)
+        error = token_json.get("error")
+
+        if error is not None:
+            raise KakaoException()
+
+        access_token = token_json.get("access_token")
+
+        profile_request = requests.get(
+            f"https://kapi.kakao.com/v2/user/me",
+            headers={
+                "Authorization": f"Bearer {access_token}",
+                "Content-type": f"application/x-www-form-urlencoded;charset=utf-8",
+            },
+        )
+        profile_json = profile_request.json()
+        profile = profile_json.get("profile")
+        email = profile.get("email")
+        if email is None:
+            raise KakaoException()
+        nickname = profile.get("nickname")
+        profile_image = profile.get("profile_image_url")
+        try:
+            user = models.User.objects.get(username=email)
+            if user.login_method != models.User.LOGIN_KAKAO:
+                raise KakaoException()
+        except models.User.DoesNotExist:
+            user = models.User.objects.create(
+                username=email,
+                email=email,
+                first_name=nickname,
+                login_method=models.User.LOGIN_KAKAO,
+                email_verified=True,
+            )
+            user.set_unusable_password
+            user.save()
+        login(request, user)
+        return redirect(reverse("core:home"))
     except KakaoException:
         return redirect(reverse("users:login"))
