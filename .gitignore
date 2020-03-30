@@ -209,3 +209,5 @@ uploads/
 
 # Environments
 .env
+
+node_modules/
