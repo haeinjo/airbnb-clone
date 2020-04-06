@@ -14,22 +14,11 @@ Login
 
     <form method="POST" action="{% url 'users:login' %}" class="w-full">
         {% csrf_token %}
-        <div class="input">
-            {{form.email}}
-            {% if form.email.errors %}
-            {% for error in form.email.errors %}
-            <span class="text-red-700 text-sm font-medium">{{error}}</span>
-            {% endfor %}
-            {% endif %}
-        </div>
-        <div class="input">
-            {{form.password}}
-            {% if form.password.errors %}
-            {% for error in form.password.errors %}
-            <span class="text-red-700 text-sm font-medium">{{error}}</span>
-            {% endfor %}
-            {% endif %}
-        </div>
+
+        {% for field in form %}
+        {% include 'partials/form_input.html' with field=field %}
+        {% endfor %}
+
         <button class="btn bg-red-500 text-white">Login</button>
     </form>
     <div class="flex">
