@@ -15,4 +15,14 @@
     }
 }
 
+.btn {
+    @apply rounded-sm text-center py-5 font-medium text-lg font-light w-full
+}
+
+input {
+    @apply text-left px-3 border border-gray-400 mb-3 rounded-sm py-5 font-medium text-lg font-light w-full;
+    &:focus {
+        @apply outline-none border-teal-500;
+    }
+}
 @tailwind utilities;

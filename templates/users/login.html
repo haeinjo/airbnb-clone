@@ -11,10 +11,16 @@ Login
 {% block content %}
 <div class="lg:w-5/12 md:w-1/2 xl:w-1/4 container mx-auto my-10 flex flex-col items-center border p-6 border-gray-400">
     {% include 'partials/social_login.html' %}
-    <form method="POST" action="{% url 'users:login' %}">
+
+    <form method="POST" action="{% url 'users:login' %}" class="w-full">
         {% csrf_token %}
-        {{form.as_p}}
-        <button>Login</button>
+        <input type="email" placeholder="Email">
+        <input type="password" placeholder="Password">
+        <button class="btn bg-red-500 text-white">Login</button>
     </form>
+    <div class="flex">
+        <span class="mr-2">Don't have an account?</span>
+        <a href="{% url 'users:signup' %}" class="font-medium text-teal-500">Sign up</a>
+    </div>
 </div>
 {% endblock %}
