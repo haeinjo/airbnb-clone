@@ -6,6 +6,7 @@
 
 {% block content %}
 <div>
+    <h2>By: <a href="{{room.host.get_absolute_url}}">{{room.host.username}}</a></h2>
     <p>{{ room.name }}</p>
     <p>{{ room.description }}</p>
     <p>{{ room.country }}</p>
