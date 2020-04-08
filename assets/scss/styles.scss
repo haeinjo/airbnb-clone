@@ -40,4 +40,34 @@ form {
     }
 }
 
+@keyframes messageFadeIn {
+    0% {
+        transform: translateY(-70px)
+    }
+    5% {
+        transform: translateY(50px)
+    }
+    95% {
+        transform: translateY(50px)
+    }
+    100% {
+        transform: translateY(-70px)
+    }
+}
+
+.message {
+    animation: messageFadeIn 5s ease-in-out forwards;
+    &.error {
+        @apply bg-red-700;
+    }
+    &.info {
+        @apply bg-blue-500;       
+    }
+    &.success {
+        @apply bg-green-500;
+    }
+    &.warning {
+        @apply bg-yellow-400;
+    }
+}
 @tailwind utilities;
