@@ -19,11 +19,26 @@
     @apply rounded-sm text-center py-5 font-medium text-lg font-light w-full
 }
 
-input {
-    @apply text-left px-3 border border-gray-600 rounded-sm py-4 font-medium text-lg font-light w-full;
+input,
+textarea,
+select {
+    @apply text-left px-5 border border-gray-600 rounded-sm py-4 font-light text-base font-light w-full;
     &:focus {
         @apply outline-none border-teal-500;
     }
+}
+
+textarea {
+    resize: none;
+    height: 100px;
+}
+
+select {
+    height: 30px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-size: 10px;
+    font-weight: bold;
 }
 
 .btn-link {
@@ -32,7 +47,7 @@ input {
 
 form {
     .input {
-        @apply mb-3;
+        @apply mb-3 w-full;
         &.has_error {
             input {
                 @apply bg-red-200 border-gray-400;
