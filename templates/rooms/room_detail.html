@@ -5,22 +5,14 @@
 {% endblock page_title %}
 
 {% block content %}
-<div>
-    <h2>By: <a href="{{room.host.get_absolute_url}}">{{room.host.username}}</a></h2>
-    <p>{{ room.name }}</p>
-    <p>{{ room.description }}</p>
-    <p>{{ room.country }}</p>
-    <p>{{ room.city }}</p>
-    <p>{{ room.price }}</p>
-    <p>{{ room.address }}</p>
-    <p>{{ room.beds }}</p>
-    <p>{{ room.bedrooms }}</p>
-    <p>{{ room.baths }}</p>
-    <p>{{ room.check_in }}</p>
-    <p>{{ room.check_out }}</p>
-    <p>{{ room.instant_book }}</p>
-    <p>{{ room.host }}</p>
-    <p>{{ room.room_type }}</p>
-    <p>{{ room.amenities }}</p>
+<div class="container max-w-full h-75vh mb-20 flex mx-auto">
+    <div style="background-image:url({{room.first_photo}})" class="w-1/2 h-full bg-cover bg-center"></div>
+    <div class="w-1/2 flex flex-wrap">
+        {% for photo in room.get_next_four %}
+        <div style="background-image:url({{photo.file.url}})"
+            class="w-1/2 h-auto bg-cover bg-center border border-gray-700"></div>
+        {% endfor %}
+    </div>
 </div>
+
 {% endblock %}
