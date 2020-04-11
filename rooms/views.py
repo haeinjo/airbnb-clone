@@ -174,7 +174,7 @@ class EditPhotoView(mixins.LoggedInOnlyView, SuccessMessageMixin, UpdateView):
         return reverse("rooms:photos", kwargs={"pk": room_pk})
 
 
-class AddPhotoView(mixins.LoggedInOnlyView, SuccessMessageMixin, FormView):
+class AddPhotoView(mixins.LoggedInOnlyView, FormView):
     model = models.Photo
     template_name = "rooms/photo_create.html"
     fields = ("caption", "file")
@@ -183,7 +183,7 @@ class AddPhotoView(mixins.LoggedInOnlyView, SuccessMessageMixin, FormView):
     def form_valid(self, form):
         pk = self.kwargs.get("pk")
         form.save(pk)
-
+        messages.success(self.request, "Photo Uploaded")
         return redirect(reverse("rooms:photos", kwargs={"pk": pk}))
 
 
