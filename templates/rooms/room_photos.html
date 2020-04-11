@@ -10,7 +10,7 @@
 
 {% block content %}
 <div class="container mx-auto my-10 flex flex-col">
-
+    <a href="{% url 'rooms:add-photo' room.pk %}" class="btn-link my-10 w-1/6">Upload Photo</a>
     {% for photo in room.photos.all %}
     <div class="mb-5 border border-gray-400 p-6 flex justify-between">
         <div class="flex items-start">
