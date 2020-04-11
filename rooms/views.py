@@ -187,6 +187,19 @@ class AddPhotoView(mixins.LoggedInOnlyView, FormView):
         return redirect(reverse("rooms:photos", kwargs={"pk": pk}))
 
 
+class CreateRoomView(mixins.LoggedInOnlyView, FormView):
+
+    form_class = forms.CreateRoomForm
+    template_name = "rooms/room_create.html"
+
+    def form_valid(self, form):
+        room = form.save()
+        room.host = self.request.user
+        room.save()
+        messages.success(self.request, "Room Created")
+        return redirect(reverse("rooms:detail", kwargs={"pk": room.pk}))
+
+
 # from django.shortcuts import render, redirect
 # from django.core.paginator import Paginator, EmptyPage
 # from . import models as rooms_models
