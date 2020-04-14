@@ -25,13 +25,18 @@ class Calendar(calendar.Calendar):
     def get_days(self):
         weeks = self.monthdays2calendar(self.year, self.month)
         days = []
+        cnt = 0
         for week in weeks:
-            print(week)
-        return weeks
+            for day, day_of_week in week:
+                if cnt == 0 & day_of_week >= 0 & day_of_week <= 5:
+                    temp = day_of_week + 1
+                    for i in range(temp):
+                        days.append(0)
+                    days.append(day)
+                else:
+                    days.append(day)
+                cnt += 1
+        return days
 
     def get_month(self):
         return self.months[self.month - 1]
-
-
-calendar = Calendar(2020, 4)
-calendar.get_days()
