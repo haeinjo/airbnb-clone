@@ -17,7 +17,11 @@ Reservation {{reservation.check_in}}
         </div>
         <div class="border border-gray-300 p-5">
             <div class="font-normal text-gray-600">{{reservation.check_in}} ~ {{reservation.check_out}}
-                <span class="ml-4">{{reservation.status}}</span></div>
+                <span
+                    class="ml-4 {% if reservation.status == 'pending' %}text-yellow-500{%elif reservation.status == 'calceled' %}text-red-700{% else %}text-teal-600{% endif %}">
+                    {{reservation.get_status_display}}
+                </span>
+            </div>
             <div class="text-xl font-medium text-gray-600 mt-1">{{reservation.room.name}}</div>
         </div>
         <div class="flex border border-gray-300 p-5 items-start px-8">
@@ -32,8 +36,16 @@ Reservation {{reservation.check_in}}
                 <div class="w-5/6 font-medium text-gray-600 mb-8">Your host is the best person to contact for questions
                     about
                     your reservation.</div>
-                <div class="btn-link w-2/4 py-2">Send a Message</div>
+                <a href="#" class="btn-link px-20 py-2">Send a Message</a>
             </div>
+        </div>
+        <div class="flex border border-gray-300 items-start py-10 px-5 justify-between">
+            {% if reservation.status == 'pending' %}
+            <a herf="#" class="btn-link px-10 py-2 w-auto mx-20">Cancel Reservation</a>
+                {% if reservation.room.host == user %}
+                    <a herf="#" class="btn-link px-10 py-2 w-auto mx-20">Confirm Reservation</a>
+                {% endif %}
+            {% endif %}
         </div>
     </div>
 </div>
