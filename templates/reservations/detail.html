@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block page_title %}
+Reservation {{reservation.check_in}}
+{% endblock page_title %}
+
+
+{% block search-bar %}
+{% endblock search-bar %}
+
+{% block content %}
+<div class="container mx-auto my-10 flex flex-col">
+    <div class="w-3/4 mx-auto">
+        <div class="font-medium text-2xl text-gray-700 mb-3">Contact Your Host</div>
+        <div class="w-full h-25vh bg-cover bg-center rounded-t"
+            style="background-image:url({{reservation.room.first_photo}})">
+        </div>
+        <div class="border border-gray-300 p-5">
+            <div class="font-normal text-gray-600">{{reservation.check_in}} ~ {{reservation.check_out}}
+                <span class="ml-4">{{reservation.status}}</span></div>
+            <div class="text-xl font-medium text-gray-600 mt-1">{{reservation.room.name}}</div>
+        </div>
+        <div class="flex border border-gray-300 p-5 items-start px-8">
+            <div class="flex flex-col justify-center pt-5">
+                <div>
+                    {% include 'mixins/user_avatar.html' with user=reservation.room.host%}
+                </div>
+                <div class="text-center mt-2">{{reservation.room.host.first_name}}</div>
+            </div>
+            <div class="ml-10">
+                <div class="font-semibold text-gray-700 text-lg">Contact Your Airbnb Host</div>
+                <div class="w-5/6 font-medium text-gray-600 mb-8">Your host is the best person to contact for questions
+                    about
+                    your reservation.</div>
+                <div class="btn-link w-2/4 py-2">Send a Message</div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
