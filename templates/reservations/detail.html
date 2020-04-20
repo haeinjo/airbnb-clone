@@ -41,9 +41,9 @@ Reservation {{reservation.check_in}}
         </div>
         <div class="flex border border-gray-300 items-start py-10 px-5 justify-between">
             {% if reservation.status == 'pending' %}
-            <a herf="#" class="btn-link px-10 py-2 w-auto mx-20">Cancel Reservation</a>
+            <a href="{% url 'reservations:edit' reservation.pk 'cancel' %}" class="btn-link px-10 py-2 w-auto mx-20">Cancel Reservation</a>
                 {% if reservation.room.host == user %}
-                    <a herf="#" class="btn-link px-10 py-2 w-auto mx-20">Confirm Reservation</a>
+                    <a href="{% url 'reservations:edit' reservation.pk 'confirm' %}" class="btn-link px-10 py-2 w-auto mx-20">Confirm Reservation</a>
                 {% endif %}
             {% endif %}
         </div>
