@@ -54,11 +54,16 @@ class Reservation(core_models.TimeStampedModel):
 
     in_progress.boolean = True
 
-    def in_finished(self):
+    def is_finished(self):
         now = timezone.now().date()
-        return self.check_out < now
+        is_finish = self.check_out < now
 
-    in_finished.boolean = True
+        if is_finish:
+            BookedDay.objects.filter(reservation=self).delete()
+
+        return is_finish
+
+    is_finished.boolean = True
 
     def save(self, *args, **kwargs):
         if self.pk is None:
